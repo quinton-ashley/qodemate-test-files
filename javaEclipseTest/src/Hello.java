@@ -34,8 +34,8 @@ import processing.core.*;
 import processing.event.MouseEvent;
 //1
 /**
- * RuntimeCompilerProcessing is an example class that uses stackoverflow 
- * user Marco13's RuntimeCompiler utility class to plot user inputed 
+ * RuntimeCompilerProcessing is an example class that uses stackoverflow
+ * user Marco13's RuntimeCompiler utility class to plot user inputed
  * parametric equations in Processing!
  * <br><br>
  * This example is intended for Java/Processing programmers who already
@@ -53,7 +53,7 @@ public class Hello extends PApplet {
   char userWrite = 'x';
   int responseType = 0;
   Console console; //5
-  
+
   Map<String, Method> methods = new LinkedHashMap<String, Method>();
   RuntimeCompiler r = new RuntimeCompiler();
   ParametricPlotter para;
@@ -68,7 +68,7 @@ public class Hello extends PApplet {
     pixelDensity(displayDensity());
   }
 
-  public void setup() {//5
+  public void setup() { //5
 	  frameRate(60);
     surface.setTitle("Runtime Compiler Processing Example by Quinton Ashley");
     surface.setResizable(true);
@@ -78,14 +78,14 @@ public class Hello extends PApplet {
     // creates a new Console with 13 lines
     console = new Console(sidebarWidth, consoleHeight, 13);
     console.println(
-        
+
         "Runtime Compiler Example by Quinton Ashley \n"+
         "click here on this console to write a \n"+
         "parametric equation \n"+
         "click elsewhere to show/hide this console \n"+
         "right click to switch between x/y equations \n"+
         "scroll to adjust the radius \n\n"+
-        
+
         "use 'X' for the angle and 'R' for radius \n"+
         "type Math functions in lowercase letters \n"+
         "example of equation input: \n"+
@@ -95,7 +95,7 @@ public class Hello extends PApplet {
     // creates the default ParametricPlotter //6
     para = new ParametricPlotter();
     noStroke();
-  }//5
+  } //5
 
   public void draw() {
     // arrow keys provide fine grain control of the radius
@@ -209,22 +209,22 @@ public class Hello extends PApplet {
     }
 
     /**
-     * This method uses the RuntimeCompiler r to create a new class, compile it, and 
+     * This method uses the RuntimeCompiler r to create a new class, compile it, and
      * return it.
-     * 
+     *
      * @param name is the class name
      * @param equation is the Java code equation String to be used
      * @return the method created
      */
     private Method calculator(String name, String equation) {
-      r.addClass(name, 
-          "public class " + name + " { \n" + 
-              "public static float[] calc(Double R) { \n" + 
-              "  float[] positions = new float[360]; \n" + 
-              "  for (double X = 0; X < 360; X++) { \n" + 
+      r.addClass(name,
+          "public class " + name + " { \n" +
+              "public static float[] calc(Double R) { \n" +
+              "  float[] positions = new float[360]; \n" +
+              "  for (double X = 0; X < 360; X++) { \n" +
               "    positions[((int)X)] = (float) ( " + equation + " ); \n" +
-              "  } \n" + 
-              "  return positions; \n" + 
+              "  } \n" +
+              "  return positions; \n" +
               "} \n" +
           "} \n");
       r.compile();
@@ -234,7 +234,7 @@ public class Hello extends PApplet {
           "calc",
           (Double) radius);
     }
-    
+
     /**
      * Changes all of the properties of this object to the properties given
      * in the string.
@@ -253,10 +253,10 @@ public class Hello extends PApplet {
         console.println("creation failure");
       }
     }
-    
+
     @Override
     public String toString() {
-      return String.format(":%f:%s:%s:", 
+      return String.format(":%f:%s:%s:",
           radius, (eqPosX == null)?" ":eqPosX, (eqPosY == null)?" ":eqPosY);
     }
   }
@@ -290,7 +290,7 @@ public class Hello extends PApplet {
         .replace(':', ' ')  //
         .replace('?', ' ')  // these chars are removed to prevent user hacking
         .replace('"', ' ')  //
-        .replace(';', ' '); // 
+        .replace(';', ' '); //
   }
 
   /**
@@ -300,7 +300,7 @@ public class Hello extends PApplet {
    * @return a unique Java class name based on the equation
    */
   private static String equationToClassName(String equation) {
-    // a unique Java class name is made by consistently replacing arithmetic and 
+    // a unique Java class name is made by consistently replacing arithmetic and
     // non-number/non-letter characters with reserved capital letters
     return equation.replaceAll("Math.", "")
         .replaceAll(" ", "")
@@ -315,7 +315,7 @@ public class Hello extends PApplet {
         .replace('(', 'F')
         .replace(')', 'B');
   }
-  
+
   public void mousePressed() {
     if (mouseButton == LEFT) {
       if (!console.visible || mouseX > sidebarWidth) {
@@ -331,7 +331,7 @@ public class Hello extends PApplet {
 
   public void mouseWheel(MouseEvent event) {
     double x = (double) ((4.0*event.getCount()));
-    
+
     // Adjusts the radius via scrolling by making use of the characteristics
     // of a y=x^3 shaped function to provide both relatively fine grain
     // and coarse control of the radius from linear event.getCount() output.
@@ -342,7 +342,7 @@ public class Hello extends PApplet {
   public void keyPressed() {
     response(key);
   }
-  
+
   /**
    * Handles keyPressed responses and internal calls with chars.
    * @param key is a command
@@ -354,7 +354,7 @@ public class Hello extends PApplet {
       altPressed = false;
       switch (key) {
       case 'w': response('∑'); break;
-      
+
       default: break;
       }
     } else if (responseType == 0) {
@@ -383,7 +383,7 @@ public class Hello extends PApplet {
         case 'p':
           userPrint();
           break;
-        case 'm': 
+        case 'm':
           userMouseVisible = ! userMouseVisible;
           if (userMouseVisible) {
             cursor();
@@ -394,7 +394,7 @@ public class Hello extends PApplet {
         case 'c':
           console.visible = !console.visible;
           break;
-          
+
         default:
           break;
         }
@@ -427,7 +427,7 @@ public class Hello extends PApplet {
         console.println(console.input);
         userAssign(console.input);
         console.enter();
-        
+
         responseType = 0;
       } else if (key == 8) {
         console.delete();
@@ -437,9 +437,9 @@ public class Hello extends PApplet {
         String text = console.getTextFromClipboard();
         console.input += text;
       }
-    } 
+    }
   }
-  
+
   public void keyReleased() {
     if (key == CODED) {
       if (keyCode == LEFT) {
@@ -464,18 +464,18 @@ public class Hello extends PApplet {
         temp = null;
       }
       if (userWrite == 'x') {
-        para.createPositionsX(temp); 
+        para.createPositionsX(temp);
       } else {
         para.createPositionsY(temp);
       }
     }break;
     case '∑': para.buildFromCode(value); break;
-    
+
     default:
       break;
     }
   }
-  
+
   /**
    * Prints the parameters of userWrite.
    */
@@ -484,7 +484,7 @@ public class Hello extends PApplet {
     case 'x': console.println( (para.eqPosX != null)?para.eqPosX:"cos(X)*R" ); break;
     case 'y': console.println( (para.eqPosY != null)?para.eqPosY:"cos(X)*R"); break;
     case '∑': console.println(para.toString()); break;
-    
+
     default:
       break;
     }
@@ -494,9 +494,9 @@ public class Hello extends PApplet {
    * Utility class for compiling classes whose source code is given as
    * strings, in-memory, at runtime, using the JavaCompiler tools.
    * <br><br>
-   * This class was not authored by Quinton Ashley 
+   * This class was not authored by Quinton Ashley
    * but has been edited for use in this application.
-   * The unaltered source of this code by stackoverflow 
+   * The unaltered source of this code by stackoverflow
    * user Marco13 can be found at:
    * <a href="http://stackoverflow.com/a/30038318/3792062">
    * http://stackoverflow.com/a/30038318/3792062</a>
@@ -522,10 +522,10 @@ public class Hello extends PApplet {
 
     /**
      * Creates a new RuntimeCompiler
-     * 
+     *
      * @throws NullPointerException If no JavaCompiler could be obtained.
      * This is the case when the application was not started with a JDK,
-     * but only with a JRE. (More specifically: When the JDK tools are 
+     * but only with a JRE. (More specifically: When the JDK tools are
      * not in the classpath).
      */
     public RuntimeCompiler() {
@@ -546,7 +546,7 @@ public class Hello extends PApplet {
     /**
      * Add a class with the given name and source code to be compiled
      * with the next call to {@link #compile()}
-     * 
+     *
      * @param className The class name
      * @param code The code of the class
      */
@@ -558,9 +558,9 @@ public class Hello extends PApplet {
     }
 
     /**
-     * Compile all classes that have been added by calling 
+     * Compile all classes that have been added by calling
      * {@link #addClass(String, String)}
-     * 
+     *
      * @return Whether the compilation succeeded
      */
     boolean compile() {
@@ -568,16 +568,16 @@ public class Hello extends PApplet {
           new DiagnosticCollector<JavaFileObject>();
       CompilationTask task =
           javaCompiler.getTask(null, classDataFileManager,
-              diagnosticsCollector, null, null, 
+              diagnosticsCollector, null, null,
               compilationUnits);
       boolean success = task.call();
       compilationUnits.clear();
       //			for (Diagnostic<?> diagnostic : diagnosticsCollector.getDiagnostics()) {
       //				System.out.println(
-      //						diagnostic.getKind() + " : " + 
+      //						diagnostic.getKind() + " : " +
       //								diagnostic.getMessage(null));
       //				System.out.println(
-      //						"Line " + diagnostic.getLineNumber() + 
+      //						"Line " + diagnostic.getLineNumber() +
       //						" of " + diagnostic.getSource());
       //				System.out.println();
       //			}
@@ -586,8 +586,8 @@ public class Hello extends PApplet {
 
     /**
      * Obtain a class that was previously compiled by adding it with
-     * {@link #addClass(String, String)} and calling {@link #compile()}. 
-     * 
+     * {@link #addClass(String, String)} and calling {@link #compile()}.
+     *
      * @param className The class name
      * @return The class. Returns <code>null</code> if the compilation failed.
      */
@@ -602,7 +602,7 @@ public class Hello extends PApplet {
 
       /**
        * Creates a new in-memory representation of a Java file
-       * 
+       *
        * @param fileName The file name
        * @param code The source code of the file
        */
@@ -639,11 +639,11 @@ public class Hello extends PApplet {
 
       /**
        * Create a new java file object that represents the specified class
-       * 
+       *
        * @param className THe name of the class
        */
       private MemoryJavaClassFileObject(String className) {
-        super(URI.create("string:///" + className + ".class"), 
+        super(URI.create("string:///" + className + ".class"),
             Kind.CLASS);
         this.className = className;
       }
@@ -662,7 +662,7 @@ public class Hello extends PApplet {
     ForwardingJavaFileManager<StandardJavaFileManager> {
       /**
        * Create a new file manager that delegates to the given file manager
-       * 
+       *
        * @param standardJavaFileManager The delegate file manager
        */
       private ClassDataFileManager(
@@ -692,7 +692,7 @@ public class Hello extends PApplet {
       /**
        * Creates a new output stream that will store the class
        * data for the class with the given name
-       * 
+       *
        * @param className The class name
        */
       private ClassDataOutputStream(String className) {
@@ -717,10 +717,10 @@ public class Hello extends PApplet {
   static class MethodInvocationUtils {
     /**
      * Utility method to find the first static method in the given
-     * class that has the given name and can accept the given 
-     * arguments. Returns <code>null</code> if no such method 
+     * class that has the given name and can accept the given
+     * arguments. Returns <code>null</code> if no such method
      * can be found.
-     * 
+     *
      * @param c The class
      * @param methodName The name of the method
      * @param args The arguments
@@ -744,7 +744,7 @@ public class Hello extends PApplet {
     /**
      * Returns whether the given arguments are assignable to the
      * respective types
-     * 
+     *
      * @param types The types
      * @param args The arguments
      * @return Whether the arguments are assignable
@@ -764,8 +764,8 @@ public class Hello extends PApplet {
     }
   }
   //4
-  /** 
-   * Console is a class for Processing that allows console text and user input 
+  /**
+   * Console is a class for Processing that allows console text and user input
    * to be displayed both in your Processing App and PDE/IDE console.
    * <p><details>
    * Sample code: constructor
@@ -828,7 +828,7 @@ public void keyPressed() {
     public Console(int width, int height, int lines) {
       this(0, 0, width, height, color(0, 80), color(255, 190), lines);
     }
-    
+
     /** Constructor method for a Console object
      * @param textColor use one of processing's color() methods to input textColor easily
      * @param textPadding space between surrounding text lines and the left and top edge of the console
@@ -837,7 +837,7 @@ public void keyPressed() {
      */
     public Console(
         int posX, int poxY,
-        int width, int height, 
+        int width, int height,
         int backColor, int textColor, int lines) {
 
       this.backColor = backColor;
@@ -892,7 +892,7 @@ public void keyPressed() {
         input = input.substring(0, input.length()-1);
       }
     }
-    
+
     public void enter() {
       if (input != null) {
         inputLog.add(input);
@@ -900,7 +900,7 @@ public void keyPressed() {
       logIndex = -1;
       input = "";
     }
-    
+
     public void upArrow() {
       if (inputLog.size() > 0) {
         if (logIndex <= 0) {
@@ -909,7 +909,7 @@ public void keyPressed() {
         input = inputLog.get(--logIndex);
       }
     }
-    
+
     public void downArrow() {
       if (inputLog.size() > 0) {
         if (logIndex >= inputLog.size()-1) {
@@ -955,7 +955,7 @@ public void keyPressed() {
       return (String) getFromClipboard(DataFlavor.stringFlavor);
     }
 
-    /** This method is adapted from this 
+    /** This method is adapted from this
      * <a href="https://forum.processing.org/one/topic/pasting-text-from-the-clipboard-into-processing.html">method</a>
      * on the Processing Forums.
      * @param flavor
